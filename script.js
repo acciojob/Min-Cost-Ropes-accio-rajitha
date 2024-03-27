@@ -1,34 +1,30 @@
 function mincost(arr)
 { 
 //write your code here
-// return the min cost
-	 // Create a min-heap
-    const PriorityQueue = require('priorityqueuejs');
-    const pq = new PriorityQueue((a, b) => a - b);
-
-    // Add all the rope lengths to the priority queue
-    arr.forEach(length => pq.enq(length));
-
+arr.sort((a, b) => a - b);
+    
     let totalCost = 0;
-
-    // While there is more than one rope in the priority queue
-    while (pq.size() > 1) {
+    
+    // Continue until there is only one rope left
+    while (arr.length > 1) {
         // Extract the two shortest ropes
-        const rope1 = pq.deq();
-        const rope2 = pq.deq();
-
-        // Connect the two ropes and calculate the cost
+        const rope1 = arr.shift();
+        const rope2 = arr.shift();
+        
+        // Connect the ropes and calculate the cost
         const cost = rope1 + rope2;
-
-        // Add the cost to the total cost
+        
+        // Add the cost to the total
         totalCost += cost;
-
-        // Insert the connected rope back into the priority queue
-        pq.enq(cost);
+        
+        // Add the connected rope back to the array
+        arr.push(cost);
+        // Re-sort the array to maintain the min heap property
+        arr.sort((a, b) => a - b);
     }
-
+    
     return totalCost;
-}
+
   
 }
 
